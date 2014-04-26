@@ -16,6 +16,7 @@ define(function(require, exports, module) {
     var RenderNode = require('famous/core/RenderNode');
     var Transform = require('famous/core/Transform');
     var View = require('famous/core/View');
+    var Draggable = require('famous/modifiers/Draggable');
 
     // create the main context
     var mainContext = Engine.createContext();
@@ -51,6 +52,7 @@ define(function(require, exports, module) {
         renderNode.add(sizeModifier).add(surfaceModifier).add(surface);
 
         // var view = new View();
+        surface.pipe(scrollDrag);
 
 
         surface.modifier = surfaceModifier;
@@ -66,7 +68,7 @@ define(function(require, exports, module) {
     function addEvent (listener, surface, cb) {
         surface.on(listener, function (e) {
             console.log('scroll init pos: ', scrollView.getPosition());
-            scrollView.goToNextPage();
+            // scrollView.goToNextPage();
             surface.modifier.setTransform(
                 Transform.scale(2,2,1),
                 {duration: 1000} 
@@ -79,6 +81,7 @@ define(function(require, exports, module) {
         });
     }
 
+    ///////////////// for testing
     var testSurface = new Surface({
         size : [100, 100],
         properties: {
@@ -86,20 +89,76 @@ define(function(require, exports, module) {
         }
     });
 
-    var modifier = new StateModifier();
-
-
-    testSurface.on('click', function () {
-        scrollView.goToNextPage();
+    var testSurface2 = new Surface({
+        size : [100, 100],
+        properties: {
+            backgroundColor: 'blue'
+        }
     });
 
-    mainContext.add(testSurface);
+    var dragMod = new Draggable({
+        xRange: [-220, 220],
+        scale: 1,
+        // yRange: [-220, 220],
+        projection: ['x']
+    });
 
-    createSurfaceArray(4, surfaces, 100);
+    testSurface.pipe(dragMod);
+    testSurface2.pipe(dragMod);
+
+    // testSurface.pipe(Engine);
+
+    ////// 
+    testSurface.on('dragmove', function () {
+        console.log('asd');
+    });
+    // console.log('exectued');
+
+    var modifier = new StateModifier({
+        transform: Transform.translate(150,0)
+    });
+
+    var trans = {
+      method: 'snap',
+      period: 300,
+      dampingRatio: 0.3,
+      velocity: 0
+    };
+
+    // testSurface.on('', function () {
+    //     // scrollView.goToNextPage();
+    //     dragMod.setPosition([0,0,0], trans);
+    // });
+
+    // testSurface.on('', function () {
+    //     // scrollView.goToNextPage();
+    //     dragMod.setPosition([0,0,0], trans);
+    // });
+
+    var masterView = new View();
+    var view1 = new View();
+    var view2 = new View();
+
+    view1.add(modifier).add(testSurface);
+    view2.add(testSurface2);
+
+    masterView.add(view1);
+    masterView.add(view2);
+
+    mainContext.add(dragMod).add(masterView);
+
+    // view.add(modifier).add(testSurface);
+    // mainContext.add(view);
+    // mainContext.add(dragMod).add(modifier).add(testSurface);
+    /////////////////////// for testing
+
+    createSurfaceArray(50, surfaces, 100);
 
     var scrollView = new Scrollview({
-        direction: Utility.Direction.X
+        // paginated: true,
+        direction: Utility.Direction.X,
     });
+
 
     var scrollViewModifier = new StateModifier({
         origin: [0, 0.5]
@@ -111,39 +170,3 @@ define(function(require, exports, module) {
     mainContext.add(scrollViewModifier).add(scrollView);
 
 });
-
-    // var testSurface2 = new Surface({
-    //     size : [100, 100],
-    //     properties: {
-    //         backgroundColor: 'blue'
-    //     }
-    // });
-
-    //     var testSurface3 = new Surface({
-    //     size : [100, 100],
-    //     properties: {
-    //         backgroundColor: 'black'
-    //     }
-    // });
-
-    //         var testSurface4 = new Surface({
-    //     size : [100, 100],
-    //     properties: {
-    //         backgroundColor: 'yellow'
-    //     }
-    // });
-
-    // var testSurface5 = new Surface({
-    //     size : [100, 100],
-    //     properties: {
-    //         backgroundColor: 'gray'
-    //     }
-    // });
-
-
-    // var testSurface6 = new Surface({
-    //     size : [100, 100],
-    //     properties: {
-    //         backgroundColor: 'green'
-    //     }
-    // });
