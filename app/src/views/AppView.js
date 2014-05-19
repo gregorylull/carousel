@@ -38,7 +38,7 @@ define(function(require, exports, module) {
         var createScrollItemArray = function (num, size) {
             for (var i = 0; i < num; i += 1) {
                 var scrollItemView = new Surface({
-                    content: "<img src='../content/images/picasso.jpeg' height='" + size + "' width='" + size + "'>",
+                    content: "<img src='../content/images/famous_logo.png' height='" + size + "' width='" + size + "'>",
                     size: [size, size]
                 });
                 scrollItemViews.push(scrollItemView);

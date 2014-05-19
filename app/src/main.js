@@ -46,6 +46,7 @@ define(function(require, exports, module) {
     var Utility = require('famous/utilities/Utility');
     var Transform = require('famous/core/Transform');
 
+
     var mainContext = Engine.createContext();
     var scrollItemViews = [];
     var appView = new AppView();
@@ -61,4 +62,65 @@ define(function(require, exports, module) {
     mainContext.setPerspective(500);
     mainContext.add(appView);
     mainContext.add(optionsModifier).add(optionsView);
+
+    // greg test
+    var Scrollview = require('famous/views/Scrollview');
+    var Surface = require('famous/core/Surface');
+    var Modifier = require('famous/core/Modifier');
+    var View = require('famous/core/View');
+
+    var scrollview = new Scrollview({
+      direction: Utility.Direction.X,
+      clipSize: 100,
+      margin: 0
+    });
+    // creating array of surfaces
+    var arr = [];
+    var num = 100;
+    var size = 100;
+
+    // for loop
+    for (var i = 0; i < num; i++) {
+      var s = new Surface({
+        size: [size, size],
+        content: i,
+        properties: {
+          backgroundColor: 'red',
+          fontSize: '20px'
+        }
+      });
+      scrollview.subscribe(s);  // subscribe for signal
+      arr.push(s);
+    }
+
+    //add modifier
+    var m = new Modifier({
+      origin: [0.5, 0],
+      properties: {
+        border: "1px solid yellow"
+      }
+    });
+
+    // middle detection
+    var middle = new Surface({
+      size :[5, undefined],
+      properties: {
+        backgroundColor: 'blue'
+      }
+    });
+
+    var middleM = new Modifier({
+      origin: [0.5, 0]
+    });
+
+    // scrollview is part of a view
+    var view = new View();
+    view.add(scrollview);
+
+    scrollview.sequenceFrom(arr);
+
+    mainContext.add(m).add(view);
+    mainContext.add(middleM).add(middle);
+
+    // greg end test
 });
