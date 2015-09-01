@@ -46,6 +46,10 @@ define(function(require, exports, module) {
     var Utility = require('famous/utilities/Utility');
     var Transform = require('famous/core/Transform');
 
+    // greg test
+    var Scrollview = require('famous/views/Scrollview');
+    var Modifier = require('famous/core/Modifier');
+    var View = require('famous/core/View');
 
     var mainContext = Engine.createContext();
     var scrollItemViews = [];
@@ -54,8 +58,11 @@ define(function(require, exports, module) {
     var optionsModifier = new StateModifier({
         size: [undefined,200],
         origin: [0,1]
-    })
+    });
 
+    window.appView = appView;
+
+    console.log('what is windwo?', window);
 
     optionsView.pipe(appView);
 
@@ -63,12 +70,9 @@ define(function(require, exports, module) {
     mainContext.add(appView);
     mainContext.add(optionsModifier).add(optionsView);
 
-    // greg test
-    var Scrollview = require('famous/views/Scrollview');
-    var Surface = require('famous/core/Surface');
-    var Modifier = require('famous/core/Modifier');
-    var View = require('famous/core/View');
 
+   // greg test
+   /**
     var scrollview = new Scrollview({
       direction: Utility.Direction.X,
       clipSize: 100,
@@ -122,5 +126,6 @@ define(function(require, exports, module) {
     mainContext.add(m).add(view);
     mainContext.add(middleM).add(middle);
 
+   */
     // greg end test
 });

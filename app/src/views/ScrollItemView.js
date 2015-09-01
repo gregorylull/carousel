@@ -11,7 +11,7 @@ define(function(require, exports, module) {
      * @description
      */
 
-    var ScrollItemView = function (color, size) {
+    function ScrollItemView (color, size) {
         View.apply(this, arguments);
         
         this.color = color;
@@ -22,7 +22,7 @@ define(function(require, exports, module) {
         addStateModifier.call(this);
 
         addSurface.call(this);
-    };
+    }
 
     ScrollItemView.prototype = Object.create(View.prototype);
     ScrollItemView.prototype.constructor = ScrollItemView;
@@ -30,19 +30,19 @@ define(function(require, exports, module) {
     ScrollItemView.DEFAULT_OPTIONS = {
     };
 
-    var addSizeModifier = function () {
+    function addSizeModifier () {
         this.sizeModifier = new StateModifier({
             size: [this.size, this.size]
         });
-    };
+    }
 
-    var addStateModifier = function () {
+    function addStateModifier () {
         this.stateModifier = new StateModifier({
             origin: [0.5, 0.5]
         });
-    };
+    }
 
-    var addSurface = function () {
+    function addSurface () {
         this.surface = new Surface({
             size : [this.size, this.size],
             origin: [0.5, 0.5],
@@ -52,7 +52,7 @@ define(function(require, exports, module) {
         });
         this.surface.pipe(this._eventOutput);
         this.add(this.sizeModifier).add(this.stateModifier).add(this.surface);
-    };
+    }
 
     module.exports = ScrollItemView;
 });

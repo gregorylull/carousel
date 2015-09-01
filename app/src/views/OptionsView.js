@@ -37,40 +37,40 @@ define(function(require, exports, module) {
             properties: {
                 backgroundColor: 'green'
             }
-        })
+        });
         var depthButtonModifier = new StateModifier({
             origin: [0., 0]
-        })
+        });
         this.swivelButton = new Surface({
             size: [100,100],
             content: 'swivel me',
             properties: {
                 backgroundColor: 'blue'
             }
-        })
+        });
         var swivelButtonModifier = new StateModifier({
             origin: [0, 1]
-        })
+        });
         this.bounceButton = new Surface({
             size: [100,100],
             content: 'bounce me',
             properties: {
                 backgroundColor: 'orange'
             }
-        })
+        });
         var bounceButtonModifier = new StateModifier({
             origin: [1, 0]
-        })
+        });
         this.fadeButton = new Surface({
             size: [100,100],
             content: 'fade me',
             properties: {
                 backgroundColor: 'yellow'
             }
-        })
+        });
         var fadeButtonModifier = new StateModifier({
             origin: [1, 1]
-        })
+        });
         var main = this.add(surfaceMain);
         this.add(depthButtonModifier).add(this.depthButton);
         this.add(swivelButtonModifier).add(this.swivelButton);
@@ -89,7 +89,6 @@ define(function(require, exports, module) {
             this._eventOutput.emit('bounce');
         }.bind(this));
         this.fadeButton.on('click', function() {
-            console.log('fade');
             this._eventOutput.emit('fade');
         }.bind(this));
 
